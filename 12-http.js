@@ -9,7 +9,7 @@ const server = http.createServer((req, res)=>{
         res.write("Here is our short history")
         res.end()
     }
-    {
+    else{
     res.end(`
     <h1>OOPS!</h1>
     <p>We don't find any resource</p>
