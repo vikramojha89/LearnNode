@@ -1,9 +1,7 @@
-const {writeFile}  = require('fs');
+const {openSync, closeSync, appendFileSync}  = require('fs');
 
-for(i=0;i<1000; i++){
-    writeFile('./content/big-file.txt', "hello World", {flag:'a'},(err)=>{
-        if(err){
-            console.log(err)
-        }
-    })
+let fd= openSync('./content/big-file.txt', 'a')
+for(i=0;i<10000; i++){
+    appendFileSync(fd, "hello World\n", "utf-8")
 }
+closeSync(fd)

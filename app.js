@@ -1,13 +1,16 @@
-const EventEmitter = require('events')
+const http = require('http')
+const fs = require('fs')
 
-const customEmitter = new EventEmitter();
-
-customEmitter.on('response', (name, id)=>{
-    console.log(`Data received ${name} with id:${id}`);
+const server = http.createServer((req, res)=>{
+    const fileSystem = fs.createReadStream('./content/big-file.txt', "utf8")
+    fileSystem.on('open', ()=>{
+        fileSystem.pipe(res)
+    })
+    fileSystem.on('error', (err)=>{
+        res.end(err);
+    })
 })
 
-customEmitter.on('response', ()=>{
-    console.log("Some other logic");
+server.listen(5000, ()=>{
+    console.log("Server listening to port 5000...");
 })
-
-customEmitter.emit('response', "john", "32")
